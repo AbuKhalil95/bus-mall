@@ -19,13 +19,13 @@ function Product(name, id) {
   this.clicked = 0;
   this.shown = 0;
   if (name == "usb"){
-    this.url= "<img src='../img/" +name + ".gif' id=" + id + " />"
+    this.url= "<img src='img/" +name + ".gif' id=" + id + " />"
   }
   else if (name == "sweep"){
-    this.url= "<img src='../img/" +name + ".png' id=" + id + " />"
+    this.url= "<img src='img/" +name + ".png' id=" + id + " />"
   } 
   else {
-    this.url= "<img src='../img/" +name + ".jpg' id=" + id + " />"
+    this.url= "<img src='img/" +name + ".jpg' id=" + id + " />"
   }
 }
 
