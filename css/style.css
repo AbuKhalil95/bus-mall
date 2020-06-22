@@ -1,28 +1,44 @@
-main {
+section {
   display: inline-flex;
 }
 aside {
-  width: 25%;
+  /* width: 25%; */
 }
 section {
+  width: 100%;
+}
+main article {
   width: 75%;
+  margin: 0 auto;
 }
 
 img {
   width: 250px;
   height: 250px;
-
+  display: block;
+  margin: 10px;
+  float: left;
 }
 .image {
-  display: inline-grid;
+  /* display: inline-grid; */
+  /* margin: 30px auto; */
+  /* clear: both; */
 }
-
 #imageArea {
-  margin: 0 auto;
-  height: 600px;
+  /* height: 600px; */
   /* display: inline-flex; */
 }
 
+#resultArea {
+  column-count:2;
+}
+@media screen and (max-width: 1370px) {
+  #resultArea {
+    -webkit-column-count: 1;
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+}
           /* Table styling */
         table {
           display: table;
@@ -33,24 +49,13 @@ img {
           border-style: solid;
           border-width: 0.5px;
         }
-        caption {
-          display: table-caption;
-          text-align: center;
-          margin-top: 20px;
-        }
-
-        table:first-of-type {
-          width: 100%;
-          margin-bottom: 0  px;
-        }
-
          thead {
           background-color: #7b7b7b;
           color: white;
         }
         thead td {
           border: none;
-          padding: 20px 20px;
+          padding: 10px;
         }
         tfoot tr {
           background-color: #606e83;
@@ -69,5 +74,13 @@ img {
           font-family: Oswald, sans-serif;
           width: 5%;
           vertical-align: middle;
-
         }
+
+main section:nth-child(2){
+  /* width: 50%; */
+
+}
+/* #myChart{
+  width: 100% !important;
+  height:550px !important;
+} */
