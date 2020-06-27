@@ -12,19 +12,36 @@
 </head>
 <body>
   <header>
-
+    <p>With us, you will be tasked to take part in a fascinating survey about which items from the list of Images
+      you would buy, in an hour long bus trip. So take a look!
+    </p>
   </header>
 
   <main>
     <section>
-      <aside>
+      <!-- <aside>
         <div id="resultArea"></div>
-      </aside>
+      </aside> -->
       <article>
-        <div id="imageArea"></div>
+        <div id="input">
+          <div>
+            <label for="numberRnd">Enter the numbers of rounds.</label>
+            <input id="numberRnd" type="number" value="25">
+          </div>
+          <div id="imgCount">
+            <label for="numberImg">Enter the # Images to click.</label>
+            <input id="numberImg" type="number" value="3">
+          </div>
+          <div>
+            <button id="startSurvey">Start the survey!</button>
+          </div>          
+        </div>
+        <div id="imageArea" class="clearfix" style="display:none;"></div>
+        <button id="refresh" onClick="window.location.reload();" style="display:none;">Another round?</button>
+
       </article>
     </section>
-    <section>
+    <section id="chartArea">
       <button id="toggleBtn" style="display:none;">Toggle Charts</button>
       <canvas id="myChart"> </canvas>
     </section>
