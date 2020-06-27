@@ -20,6 +20,7 @@ var productClickedTotal = [];
 var productShownTotal = [];
 var productColors = [];
 var chartToggle = 1;
+var chart = '';
 
 var clicksTotal = parseInt(localStorage.getItem("clicksTotal")) || 0; // storage variables
 var seenTotal   = parseInt(localStorage.getItem("seenTotal")) || 0;    
@@ -72,21 +73,12 @@ function generateNImages() {    // generate random n images
     var randomized = 0;
     for (var i = 0; i <= nImages; i++) {      // push bug into last index
       randomized = Math.floor(Math.random() * 20);
-
-      // console.log("now " + randomized)
-      // console.log("current " + nRandomImages)
-      // console.log("previous " + nPreviousImages[i])
-      // console.log("does it include previous " + nRandomImages.includes(nPreviousImages[i]))
-      // console.log("does it include itself " + nRandomImages.includes(randomized))
-      // console.log("step "+i)
-      
       nUnique = (nRandomImages.includes(randomized) || uniquePrevious()) // check for replicating images of all input and previous
-      if (nUnique) {break;console.log("break")}
-
+      if (nUnique) {
+        break;
+        console.log("break")
+      }
       nRandomImages.push(randomized);
-      // console.log(nPreviousImages)
-      // console.log("nUnique previous func" + uniquePrevious())
-
 
     };
   } while (nUnique);
@@ -116,6 +108,7 @@ Product.prototype.renderRandImg =  function(el){    // add listener and append t
   var square = document.createElement("div");
   square.className = "image";
   square.innerHTML += this.url;
+  square.classList.add("clearfix");
   imgArea.appendChild(square);
   
   document.getElementById(el).addEventListener("click", function(){
@@ -178,9 +171,11 @@ function renderResults(){
   SortedObj.sort(compareClicked);
   addLabelData();
 
-  renderTable();
+  // renderTable();
   renderBarChart();
   document.getElementById('toggleBtn').style.display = 'block'
+  document.getElementById('refresh').style.display = 'block'
+
 }
 
 function compareClicked(a, b) {
@@ -209,20 +204,20 @@ function compareShown(a, b) {
   return comparison;
 }
 
-function renderTable(){
-  var html = "<table><thead>";
-  html+="<tr><td></td><td>clicks</td><td>shown</td></thead><tbody>";
-  for (var i = 0; i < SortedObj.length; i++) {
-      html+="<tr>";
-      html+="<td>"+SortedObj[i].name+"</td>";
-      html+="<td>"+SortedObj[i].clicked+"</td>";
-      html+="<td>"+SortedObj[i].shown+"</td>";
-      html+="</tr>";
-  }
-  html+="</tr></tbody>";
-  html+="</table>";
-  document.getElementById("resultArea").innerHTML = html;
-}
+// function renderTable(){
+//   var html = "<table><thead>";
+//   html+="<tr><td></td><td>clicks</td><td>shown</td></thead><tbody>";
+//   for (var i = 0; i < SortedObj.length; i++) {
+//       html+="<tr>";
+//       html+="<td>"+SortedObj[i].name+"</td>";
+//       html+="<td>"+SortedObj[i].clicked+"</td>";
+//       html+="<td>"+SortedObj[i].shown+"</td>";
+//       html+="</tr>";
+//   }
+//   html+="</tr></tbody>";
+//   html+="</table>";
+//   document.getElementById("resultArea").innerHTML = html;
+// }
 
 // -------------------- Charts Data -------------------- //
 
@@ -230,7 +225,7 @@ function renderTable(){
 function renderBarChart(){
   var chartDiv = document.getElementById('myChart').getContext('2d'); // canvas drawing
   chartDiv.innerHTML = '';
-  var chart = new Chart(chartDiv, {
+  chart = new Chart(chartDiv, {
     type: 'bar',
     data: {
       labels : productLabels,
@@ -253,7 +248,7 @@ function renderBarChart(){
 function renderBarChartTotal(){
   var chartDiv = document.getElementById('myChart').getContext('2d'); // canvas drawing
   chartDiv.innerHTML = '';
-  var chart = new Chart(chartDiv, {
+  chart = new Chart(chartDiv, {
     type: 'bar',
     data: {
       labels : productLabels,
@@ -282,8 +277,7 @@ function renderBarChartTotal(){
 function renderPieChart(){
 
   var chartDiv = document.getElementById('myChart').getContext('2d'); // canvas drawing
-  chartDiv.innerHTML = '';
-  var chart = new Chart(chartDiv, {
+  chart = new Chart(chartDiv, {
     type: 'doughnut',
     data: {
     labels : productLabels,
@@ -295,6 +289,9 @@ function renderPieChart(){
     }
   ]},
     options: {
+      legend: {
+        display: false
+      },
       plugins: {
         labels: [{
           render:'label',
@@ -332,12 +329,11 @@ function dynamicColors(){
     return "rgb(" + r + "," + g + "," + b + ")";
 }
 
-generateObjects();
-
-document.getElementById("toggleBtn").addEventListener("click", toggleCharts);
+addListeners();
 
 function toggleCharts() {
-  console.log(chartToggle)
+  chart.destroy();
+
   if (chartToggle == 1) {
     renderPieChart();
     chartToggle = 2;
@@ -350,4 +346,17 @@ function toggleCharts() {
     renderBarChart();
     chartToggle = 1;
   }
+}
+
+function addListeners() {
+  document.getElementById("toggleBtn").addEventListener("click", toggleCharts);
+  document.getElementById("startSurvey").addEventListener("click", startSurvey);
+}
+
+function startSurvey() {
+  document.getElementById('imageArea').style.display = 'block'
+  document.getElementById('input').style.display = 'none'
+  endRound = document.getElementById("numberRnd").value;
+  nImages = document.getElementById("numberImg").value;
+  generateObjects();
 }
